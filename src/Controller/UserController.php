@@ -22,13 +22,20 @@ class UserController extends AbstractController
     #[Route('/users/{id}', name: 'app_users')]
     public function usersList(int $id, EntityManagerInterface $entityManager): JsonResponse
     {
-        // Pobieranie przepisu według ID
-        $users = $entityManager->getRepository(User::class)->find($id);
+        $user = $entityManager->getRepository(User::class)->find($id);
 
-        if (!$users) {
-            throw $this->createNotFoundException('Przepis nie został uytkownika');
+        if (!$user) {
+            return $this->json([
+                'User not found!'
+            ]);
         }
 
-        dd($users);
+        return $this->json([
+            'id' => $user->getId(),
+            'name' => $user->getName(),
+            'second_name' => $user->getSecondName(),
+            'last_name' => $user->getLastName(),
+            'age' => $user->getAge(),
+        ]);
     }
 }
