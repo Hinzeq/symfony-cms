@@ -57,7 +57,13 @@
             "@auto-scripts"
         ],
         "phpcs": "./vendor/bin/phpcs --colors --standard=PSR12 --ignore=./src/Kernel.php ./src",
-        "phpstan": "./vendor/bin/phpstan analyse --level=max --memory-limit=256M ./src/"
+        "phplint": "./vendor/bin/parallel-lint --exclude vendor  .",
+        "phpstan": "./vendor/bin/phpstan analyse --level=max --memory-limit=256M ./src/",
+        "styles": [
+            "@phpcs",
+            "@phplint",
+            "@phpstan"
+        ]
     },
     "conflict": {
         "symfony/symfony": "*"
@@ -69,6 +75,7 @@
         }
     },
     "require-dev": {
+        "php-parallel-lint/php-parallel-lint": "^1.4",
         "phpstan/phpstan": "^2.0",
         "squizlabs/php_codesniffer": "^3.11",
         "symfony/maker-bundle": "^1.61"

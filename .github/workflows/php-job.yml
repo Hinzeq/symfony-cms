@@ -30,9 +30,31 @@ jobs:
         run: | 
           ./vendor/bin/phpcs --colors --standard=PSR12 --ignore=./src/Kernel.php ./src
 
-  phpstan:
+  phplint:
     runs-on: ubuntu-latest
     needs: phpcs
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, xml
+
+      - name: Install dependencies
+        run: |
+          composer install
+
+      - name: Run PHPLint
+        run: |
+          ./vendor/bin/parallel-lint --exclude vendor .
+
+  phpstan:
+    runs-on: ubuntu-latest
+    needs: phplint
 
     steps:
       - name: Checkout code
