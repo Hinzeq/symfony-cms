@@ -2,27 +2,27 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
-class UserController extends AbstractController
+class UsersController extends AbstractController
 {
-    #[Route('/user', name: 'app_user')]
+    #[Route('/users', name: 'app_user')]
     public function index(): JsonResponse
     {
         return $this->json([
             'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/UserController.php',
+            'path' => 'src/Controller/UsersController.php',
         ]);
     }
 
     #[Route('/users/{id}', name: 'app_users')]
     public function usersList(int $id, EntityManagerInterface $entityManager): JsonResponse
     {
-        $user = $entityManager->getRepository(User::class)->find($id);
+        $user = $entityManager->getRepository(Users::class)->find($id);
 
         if (!$user) {
             return $this->json([

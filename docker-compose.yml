@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: php
     volumes:
-      - .:/var/www/symfony
+      - .:/var/www/html
     networks:
       - app-network
 
